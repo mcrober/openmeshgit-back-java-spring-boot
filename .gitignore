@@ -176,9 +176,3 @@ nbdist/
 **/charts/*.tgz
 
 site/
-openmeshgit-archetypes/openmeshgit-spring-boot-archetype-microservice/target/classes/archetype-resources/src/main/java/controller/DashboardController.java
-openmeshgit-archetypes/openmeshgit-spring-boot-archetype-microservice/target/classes/archetype-resources/src/main/java/service/impl/GitServiceImpl.java
-openmeshgit-archetypes/openmeshgit-spring-boot-archetype-microservice/target/openmeshgit-spring-boot-archetype-microservice-1.0-SNAPSHOT.jar
-openmeshgit-archetypes/openmeshgit-spring-boot-archetype-microservice/target/classes/archetype-resources/src/main/java/controller/DashboardController.java
-openmeshgit-archetypes/openmeshgit-spring-boot-archetype-microservice/target/classes/archetype-resources/src/main/java/service/impl/GitServiceImpl.java
-openmeshgit-archetypes/openmeshgit-spring-boot-archetype-microservice/target/openmeshgit-spring-boot-archetype-microservice-1.0-SNAPSHOT.jar
