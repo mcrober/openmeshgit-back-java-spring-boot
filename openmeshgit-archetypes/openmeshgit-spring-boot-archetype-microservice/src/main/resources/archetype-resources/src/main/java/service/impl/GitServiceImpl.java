@@ -244,11 +244,9 @@ public class GitServiceImpl implements GitService {
 
             packageJson = new Gson().fromJson(rawContent, PackageJson.class);
             Map<String,String> dependencies = packageJson.getDependencies();
-            Map<String,String> devDependencies = packageJson.getDevDependencies();
             log.info(dependencies.toString());
         }
         return packageJson;
-
     }
 
 
@@ -259,7 +257,7 @@ public class GitServiceImpl implements GitService {
      * @returnHttpEntity
      */
     private HttpEntity<GitResponse> getHttpEntity(String token) {
-        HttpHeaders authHeaders = Util.createTokenAuthorizationHeaders("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");
+        HttpHeaders authHeaders = Util.createTokenAuthorizationHeaders(token);
         HttpEntity<GitResponse> httpEntity = new HttpEntity<>(authHeaders);
         return httpEntity;
     }
