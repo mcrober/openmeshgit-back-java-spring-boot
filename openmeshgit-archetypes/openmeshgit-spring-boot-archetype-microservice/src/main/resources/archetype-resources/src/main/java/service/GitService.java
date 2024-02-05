@@ -22,11 +22,9 @@ public interface GitService {
     /**
      * Get pom from git and set data
      * @param token pom uri
-     * @param gitUriPom pom uri
-     * @param gitUriPackage package uri
-
+     * @param gitUri uri
      */
-    String getDataGit(String token, String gitUriPom, String gitUriPackage);
+    String getDataGit(String token, String gitUri);
 
     /**
      * Call git and retry with develop branch if response is reference error

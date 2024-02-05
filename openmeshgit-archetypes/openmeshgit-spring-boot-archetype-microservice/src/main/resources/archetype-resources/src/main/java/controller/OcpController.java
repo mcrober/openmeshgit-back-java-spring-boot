@@ -38,8 +38,10 @@ class OcpController {
         try {
             List<Deployment> deployments = ocpService.getAllDeployments(token,paas,namespace);
 
-            for (int i=0;i<deployments.size();i++) {
-                deploymentRepository.save(deployments.get(i));
+            for (Deployment deployment : deployments) {
+                if (deploymentRepository.findByDeployName(deployment.getDeployName()) == null) {
+                    deploymentRepository.save(deployment);
+                }
             }
             return deployments;
         } catch (IOException e) {

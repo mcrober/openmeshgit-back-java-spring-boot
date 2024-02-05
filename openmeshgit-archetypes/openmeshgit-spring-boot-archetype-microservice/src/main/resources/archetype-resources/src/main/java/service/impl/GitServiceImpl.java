@@ -82,6 +82,8 @@ public class GitServiceImpl implements GitService {
      * PACKAGE_PATH
      */
     public static final String PACKAGE_PATH = "/package.json";
+
+    public static final String CONTENTS = "/contents";
     /**
      * String
      * Dockerfile Path
@@ -118,32 +120,40 @@ public class GitServiceImpl implements GitService {
      * getDataGit
      *
      * @param token  token
-     * @param gitUriPom  String
-     * @param gitUriPackage   String
+     * @param gitUri  String
+     */
+    /**
+     * getDataGit
+     *
+     * @param token  token
+     * @param gitUri  String
      */
     @Override
-    public String getDataGit(String token, String gitUriPom, String gitUriPackage) {
+    public String getDataGit(String token, String gitUri) {
+
         String result="";
         try {
             //Pom.xml case
-            if (gitUriPom != null) {
-                result = callGitUriAndRegisterPomInfo(gitUriPom,gitUriPackage,token);
+            if (gitUri != null) {
+                result = callGitUriAndRegisterPomInfo(gitUri+CONTENTS+POM_PATH, token);
             }
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
                 //Try with package.json
                 try {
-                    PackageJson packageJson = callGitUriAndRegisterPackageInfo(gitUriPackage,token);
-                    result = packageJson.getDependencies().toString();
+                    PackageJson packageJson = callGitUriAndRegisterPackageInfo(gitUri+CONTENTS+PACKAGE_PATH,token);
+
+                    Map<String, String> dependencies = packageJson.getDependencies();
+                    result = dependencies.get("@angular/core");
                 } catch(Exception exception){
-                    log.debug("Error " + gitUriPackage, exception);
+                    log.debug("Error " + gitUri+CONTENTS+PACKAGE_PATH, exception);
 
                 }
             } else {
                 log.error("Non-managed error from github ",e);
             }
         } catch (Exception e) {
-            log.debug("Error " + gitUriPom, e);
+            log.debug("Error " + gitUri+CONTENTS+POM_PATH, e);
         }
         return result;
     }
@@ -151,11 +161,10 @@ public class GitServiceImpl implements GitService {
     /**
      * callGitUriAndRegisterPomInfo
      * @param gitUri gitUri
-     * @param gitUriPackage gitUriPackage
      * @throws IOException IOException
      * @throws XmlPullParserException XmlPullParserException
      */
-    public String callGitUriAndRegisterPomInfo(String gitUri,  String gitUriPackage, String token)
+    public String callGitUriAndRegisterPomInfo(String gitUri, String token)
             throws IOException, XmlPullParserException {
         String parent ;
         ResponseEntity<GitResponse> response = callGitRetryingOnReferenceError(gitUri,token);

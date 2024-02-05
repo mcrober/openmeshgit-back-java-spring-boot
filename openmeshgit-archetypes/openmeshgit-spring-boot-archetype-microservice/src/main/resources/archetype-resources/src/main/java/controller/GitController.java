@@ -32,14 +32,16 @@ class GitController {
 
         LocalDate date = LocalDate.now();
 
-        for (int i = 0; i < gitResponse.length; i++){
-            GitRepos gitRepos = new GitRepos();
-            gitRepos.setFullName(gitResponse[i].getFull_name());
-            gitRepos.setRepoName(gitResponse[i].getName());
-            gitRepos.setReposUrl(gitResponse[i].getUrl());
-            gitRepos.setOrganization("barmanyrober");
-            gitRepos.setDate(date);
-            gitRepository.save(gitRepos);
+        for (GitReposResponse gitReposResponse : gitResponse) {
+            if (gitRepository.findByRepoName(gitReposResponse.getName()) == null){
+                GitRepos gitRepos = new GitRepos();
+                gitRepos.setFullName(gitReposResponse.getFull_name());
+                gitRepos.setRepoName(gitReposResponse.getName());
+                gitRepos.setReposUrl(gitReposResponse.getUrl());
+                gitRepos.setOrganization("barmanyrober");
+                gitRepos.setDate(date);
+                gitRepository.save(gitRepos);
+            }
         }
         return gitResponse;
     }
@@ -48,8 +50,8 @@ class GitController {
     void pom ( @RequestHeader String token,
                @RequestHeader String paas   ) throws IOException {
 
-        String pomParent = gitService.getDataGit(token,paas,paas);
-        String pomSuffix = "/contents/pom.xml";
+        String pomParent = gitService.getDataGit(token,paas);
+
 
     }
 

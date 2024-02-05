@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Transactional
 public interface DeploymentJpaRepository extends JpaRepository<Deployment, Long> {
 
-	Deployment findById(long id);
+	Deployment findByDeployName(String deployName);
 
 	void deleteById(long id) ;
 
