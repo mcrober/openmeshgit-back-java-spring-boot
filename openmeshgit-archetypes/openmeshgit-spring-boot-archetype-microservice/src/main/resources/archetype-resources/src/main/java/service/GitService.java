@@ -12,9 +12,9 @@ public interface GitService {
 
     /**
      * getRepos
-     * @param token
-     * @param paas
-     * @return
+     * @param token token
+     * @param paas paas
+     * @return GitReposResponse GitReposResponse
      */
     public GitReposResponse[] getRepos(String token,
                            String paas);
